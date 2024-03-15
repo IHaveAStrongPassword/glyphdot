@@ -1,7 +1,7 @@
 @tool
 extends Node2D
-class_name Surface
-@export var font:ConsoleFont
+class_name SurfaceGD
+@export var font:SurfaceFontGD
 @export var grid_width:int = 4
 @export var grid_height:int = 4
 var grid_size: Vector2i: get = get_grid_size

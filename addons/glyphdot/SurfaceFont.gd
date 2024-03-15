@@ -1,5 +1,5 @@
 extends Resource
-class_name ConsoleFont
+class_name SurfaceFontGD
 @export var texture: Texture2D
 @export var char_height:int
 @export var char_padding:int
