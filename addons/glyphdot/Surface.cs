@@ -19,7 +19,7 @@ public partial class Surface : Node2D
 
 	[Export] Color fore = Colors.White, back = Colors.Black;
 	public override void _Ready() {
-		grid.EnsureCapacity(GlyphCount);
+		grid = new(GlyphCount);
 	}
 	public override void _Process(double delta){
 		base._Process(delta);
