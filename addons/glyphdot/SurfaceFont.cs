@@ -1,7 +1,8 @@
 using Godot;
 using System;
 [GodotClassName("SurfaceFont")]
-public partial class ConsoleFont : Resource {
+[GlobalClass]
+public partial class SurfaceFont : Resource {
 	[Export] public Texture2D Texture;
 	[Export] public int GlyphHeight,
 		GlyphPadding,

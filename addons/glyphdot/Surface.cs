@@ -3,23 +3,27 @@ using Godot.Collections;
 using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 [GodotClassName("Surface")]
+[GlobalClass]
 public partial class Surface : Node2D
 {
-	[Export] public ConsoleFont font;
-	[Export] public int GridWidth, GridHeight;
+	[Export] public Resource font = ResourceLoader.Load("res://addons/glyphdot/IBMCGA+Sharp.tres");
+	private SurfaceFont _font => font is SurfaceFont sf ? sf : null;
+	[Export] public int GridWidth = 1, GridHeight = 1;
 	public Vector2I GridSize => new(GridWidth, GridHeight);
 	public int GlyphCount => GridWidth * GridHeight;
-	public Vector2I GlyphSize => font.GlyphSize;
-	public Vector2I CanvasSize => GridSize * font.GlyphSize;
+	public Vector2I GlyphSize => _font.GlyphSize;
+	public Vector2I CanvasSize => GridSize * _font.GlyphSize;
 
-	record PrintRect(Rect2I src, Color fore, Color back);
-	private List<PrintRect> grid;
+	public record PrintRect(Rect2I src, Color fore, Color back);
+	private PrintRect[] grid = new PrintRect[1];
 
 	[Export] Color fore = Colors.White, back = Colors.Black;
 	public override void _Ready() {
-		grid = new(GlyphCount);
+		grid = new PrintRect[GlyphCount];
+		//Debug.Print($"{Resource.IsInstanceValid(_font)} {_font}");
 	}
 	public override void _Process(double delta){
 		base._Process(delta);
@@ -42,10 +46,10 @@ public partial class Surface : Node2D
 				continue;
 			}
 			DrawRect(new Rect2I(pos * GlyphSize, GlyphSize), rect.back);
-			DrawTextureRectRegion(font.Texture, new Rect2I(pos * GlyphSize, GlyphSize), rect.src, rect.fore);
+			DrawTextureRectRegion(_font.Texture, new Rect2I(pos * GlyphSize, GlyphSize), rect.src, rect.fore);
         };
 	}
-	Rect2I empty => font.GetSrc(' ');
+	Rect2I empty => _font.GetSrc(' ');
 	public void Clear(){
 		foreach(var(index, rect) in grid.Select((rect, index) => (index, rect))){
 			grid[index] = new PrintRect(empty, fore, back);
@@ -65,6 +69,8 @@ public partial class Surface : Node2D
 	public void Print(int x, int y, char c)
 	=>
 		Print(x, y, c, fore, back);
-	public void Print(int x, int y, char c, Color f, Color b) =>
-		grid[y * GridHeight + x] = new PrintRect(font.GetSrc(c), f, b);
+	public void Print(int x, int y, char c, Color f, Color b){
+		//Debug.Print($"{grid.Length} {x} {y} {Resource.IsInstanceValid(_font)} {_font}");
+		grid[y * GridHeight + x] = new PrintRect(_font.GetSrc(c), f, b);
+	}
 }

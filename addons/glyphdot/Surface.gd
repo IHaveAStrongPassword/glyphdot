@@ -1,7 +1,7 @@
 @tool
 extends Node2D
 class_name SurfaceGD
-@export var font:SurfaceFontGD
+@export var font:SurfaceFontGD = preload("res://addons/glyphdot/IBMCGA+.tres")
 @export var grid_width:int = 4
 @export var grid_height:int = 4
 var grid_size: Vector2i: get = get_grid_size
@@ -21,9 +21,13 @@ var grid : Array[DrawRect] = []
 
 @export var fore:Color = Color.WHITE
 @export var back:Color = Color.BLACK
+
+@onready var empty:Rect2i
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var size = grid_size * font.char_size
+	
+	empty = font.get_src(' '.to_ascii_buffer()[0])
 	grid.resize(grid_width * grid_height)
 	clear()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,7 +49,7 @@ func _draw():
 			continue
 		draw_rect(Rect2i(pos * font.char_size, font.char_size), r.back)
 		draw_texture_rect_region(font.texture, Rect2i(pos * font.char_size, font.char_size), r.src, r.fore)
-@onready var empty = font.get_src(' '.to_ascii_buffer()[0])
+
 func clear():
 	for i in range(len(grid)):
 		grid[i] = DrawRect.new(empty, fore, back)
