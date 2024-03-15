@@ -4,7 +4,7 @@ using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+[GodotClassName("Surface")]
 public partial class Surface : Node2D
 {
 	[Export] public ConsoleFont font;
