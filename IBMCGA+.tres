@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ConsoleFont" load_steps=3 format=3 uid="uid://bc74hjeamdlhb"]
+
+[ext_resource type="Script" path="res://ConsoleFont.gd" id="1_3an1o"]
+[ext_resource type="Texture2D" uid="uid://duai1b3y5wmuv" path="res://IBMCGA+.png" id="1_mm6l8"]
+
+[resource]
+script = ExtResource("1_3an1o")
+texture = ExtResource("1_mm6l8")
+char_height = 8
+char_padding = 0
+char_width = 8
+columns = 32
+name = "IBMCGA+"
+solid_char_index = 0
