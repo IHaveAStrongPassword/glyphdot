@@ -1,1 +1,1 @@
-class_name RgbString
+class_name ChromeString
