@@ -12,7 +12,7 @@ public partial class SurfaceFont : Resource {
 	[Export] public int SolidGlyphIndex;
 	public Vector2I GlyphSize => new(GlyphWidth, GlyphHeight);
 	public Rect2I GetSrc(int index) {
-		int x = index / Columns, y = index % Columns;
+		int x = index % Columns, y = index / Columns;
 		return new(new Vector2I(x, y) * GlyphSize, GlyphSize);
 	}
 }

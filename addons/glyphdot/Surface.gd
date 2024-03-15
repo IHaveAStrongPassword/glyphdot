@@ -42,7 +42,7 @@ func _draw():
 		return
 	for i in range(len(grid)):
 		var x = i % grid_width
-		var y = floor(i / grid_height)
+		var y = floor(i / grid_width)
 		var pos = Vector2i(x, y)
 		var r := grid[i]
 		if r == null:

@@ -1,17 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://dt0oft6rrs004"]
+[gd_scene load_steps=5 format=3 uid="uid://dt0oft6rrs004"]
 
 [ext_resource type="Script" path="res://addons/glyphdot/Surface.cs" id="1_7kb12"]
 [ext_resource type="Script" path="res://Demo.gd" id="1_y0fpw"]
 [ext_resource type="Script" path="res://addons/glyphdot/Surface.gd" id="3_dhywu"]
+[ext_resource type="Script" path="res://Demo.cs" id="4_g3a1t"]
 
-[node name="Demo" type="Node2D"]
+[node name="Node2D" type="Node2D"]
+
+[node name="GD" type="Node2D" parent="."]
 script = ExtResource("1_y0fpw")
 
-[node name="SurfaceGD" type="Node2D" parent="."]
+[node name="SurfaceGD" type="Node2D" parent="GD"]
 script = ExtResource("3_dhywu")
+grid_width = 7
+grid_height = 3
 
-[node name="Surface" type="Node2D" parent="."]
-position = Vector2(0, 32)
+[node name="SurfaceCS" type="Node2D" parent="GD"]
+position = Vector2(0, 48)
 script = ExtResource("1_7kb12")
-GridWidth = 4
-GridHeight = 4
+GridWidth = 7
+GridHeight = 3
+
+[node name="CS" type="Node2D" parent="."]
+position = Vector2(56, 0)
+script = ExtResource("4_g3a1t")
+
+[node name="SurfaceGD" type="Node2D" parent="CS"]
+script = ExtResource("3_dhywu")
+grid_width = 7
+grid_height = 3
+
+[node name="SurfaceCS" type="Node2D" parent="CS"]
+position = Vector2(0, 48)
+script = ExtResource("1_7kb12")
+GridWidth = 7
+GridHeight = 3

@@ -40,7 +40,7 @@ public partial class Surface : Node2D
 		}
         foreach (var (index, rect) in grid.Select((rect, index) => (index, rect))) {
 			int x = index % GridWidth,
-				y = index / GridHeight;
+				y = index / GridWidth;
 			var pos = new Vector2I(x, y);
 			if(rect == null) {
 				continue;
@@ -71,6 +71,6 @@ public partial class Surface : Node2D
 		Print(x, y, c, fore, back);
 	public void Print(int x, int y, char c, Color f, Color b){
 		//Debug.Print($"{grid.Length} {x} {y} {Resource.IsInstanceValid(_font)} {_font}");
-		grid[y * GridHeight + x] = new PrintRect(_font.GetSrc(c), f, b);
+		grid[y * GridWidth + x] = new PrintRect(_font.GetSrc(c), f, b);
 	}
 }
