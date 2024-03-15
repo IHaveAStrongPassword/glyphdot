@@ -3,7 +3,7 @@ extends EditorPlugin
 
 
 func _enter_tree():
-	add_custom_type("Surface", "Node2D", preload("res://addons/glyphdot/Surface.gd"), preload("res://icon.svg"))
+	add_custom_type("Surface", "Node2D", preload("res://addons/glyphdot/Surface.gd"), preload("res://addons/glyphdot/icon.svg"))
 	pass
 
 
