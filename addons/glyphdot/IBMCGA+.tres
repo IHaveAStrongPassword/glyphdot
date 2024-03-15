@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ConsoleFont" load_steps=3 format=3 uid="uid://bc74hjeamdlhb"]
 
-[ext_resource type="Script" path="res://addons/glyphdot/ConsoleFont.gd" id="1_3an1o"]
+[ext_resource type="Script" path="res://addons/glyphdot/SurfaceFont.gd" id="1_3an1o"]
 [ext_resource type="Texture2D" uid="uid://duai1b3y5wmuv" path="res://addons/glyphdot/IBMCGA+.png" id="1_mm6l8"]
 
 [resource]
