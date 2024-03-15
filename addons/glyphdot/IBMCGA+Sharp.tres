@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SurfaceFont" load_steps=3 format=3 uid="uid://bc74hjeamdlhb"]
+
+[ext_resource type="Script" path="res://addons/glyphdot/SurfaceFont.cs" id="1_3an1o"]
+[ext_resource type="Texture2D" uid="uid://duai1b3y5wmuv" path="res://addons/glyphdot/IBMCGA+.png" id="1_mm6l8"]
+
+[resource]
+script = ExtResource("1_3an1o")
+Texture = ExtResource("1_mm6l8")
+GlyphHeight = 8
+GlyphPadding = 0
+GlyphWidth = 8
+Columns = 32
+Name = "IBMCGA+"
+SolidGlyphIndex = 0
