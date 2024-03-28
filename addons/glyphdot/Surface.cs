@@ -22,9 +22,18 @@ public partial class Surface : Node2D
 
 	[Export] Color fore = Colors.White, back = Colors.Black;
 	public override void _Ready() {
-		grid = new PrintRect[GlyphCount];
+		ResetGrid();
 		//Debug.Print($"{Resource.IsInstanceValid(_font)} {_font}");
 	}
+	public void SetSize(int w, int h) {
+		GridWidth = w;
+		GridHeight = h;
+		ResetGrid();
+	}
+	public void ResetGrid () {
+		grid = new PrintRect[GlyphCount];
+	}
+
 	public override void _Process(double delta){
 		base._Process(delta);
 		if (Engine.IsEditorHint()){
