@@ -16,7 +16,7 @@ public partial class Surface : Node2D
 	public int GlyphCount => GridWidth * GridHeight;
 	public Vector2I GlyphSize => _font.GlyphSize;
 	public Vector2I CanvasSize => GridSize * _font.GlyphSize;
-
+	public Vector2 ScaledSize => CanvasSize * Scale;
 	public record PrintRect(Rect2I src, Color fore, Color back);
 	private PrintRect[] grid = new PrintRect[1];
 
@@ -81,5 +81,22 @@ public partial class Surface : Node2D
 	public void Print(int x, int y, char c, Color f, Color b){
 		//Debug.Print($"{grid.Length} {x} {y} {Resource.IsInstanceValid(_font)} {_font}");
 		grid[y * GridWidth + x] = new PrintRect(_font.GetSrc(c), f, b);
+	}
+
+	
+}
+
+public static class SSurface {
+	public static void FullScreen (this Surface s) {
+		var ws = DisplayServer.WindowGetSize();
+		var v = (ws / (new Vector2I(100, 60) * 8));
+		int scale = v[((int)v.MinAxisIndex())];
+		s.Scale = new Vector2(scale, scale);
+		var font = s.font as SurfaceFont;
+		var size = ws / (font.GlyphSize * scale);
+		s.SetSize(size.X, size.Y);
+		Debug.WriteLine($"{s.Name} resized to {size.X} x {size.Y}");
+
+		s.Position = (ws - s.CanvasSize * scale) / 2;
 	}
 }
