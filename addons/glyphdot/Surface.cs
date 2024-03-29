@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 [GodotClassName("Surface")]
 [GlobalClass]
+[Tool]
 public partial class Surface : Node2D
 {
 	[Export] public Resource
@@ -62,8 +63,14 @@ public partial class Surface : Node2D
 	}
 	public override void _Draw(){
 		base._Draw();
-		if (Engine.IsEditorHint()){
-			DrawRect(new(Transform.Origin, GridSize * GlyphSize), back, true);
+		if (Engine.IsEditorHint() && IsNodeReady()){
+			Console.WriteLine($"Font: {font}");
+			DrawRect(new(Vector2.Zero, GridSize * GlyphSize), back, true);
+
+			foreach(int i in Enumerable.Range(0, GlyphCount)) {
+				DrawRect(new(IndexToPos(i) * GlyphSize, GlyphSize), fore, false);
+			}
+			Console.WriteLine("Drawing empty in editor");
 			return;
 		}
 		foreach(var index in Enumerable.Range(0, grid.Length)) {

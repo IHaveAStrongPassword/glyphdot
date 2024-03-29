@@ -2,6 +2,7 @@ using Godot;
 using System;
 [GodotClassName("SurfaceFont")]
 [GlobalClass]
+[Tool] //https://github.com/godotengine/godot/issues/85459#issuecomment-1870680268
 public partial class SurfaceFont : Resource {
 	[Export] public Texture2D Texture;
 	[Export] public int GlyphHeight,
