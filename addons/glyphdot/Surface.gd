@@ -4,6 +4,9 @@ class_name SurfaceGD
 @export var font:SurfaceFontGD = preload("res://addons/glyphdot/IBMCGA+.tres")
 @export var grid_width:int = 4
 @export var grid_height:int = 4
+var glyph_count:int:
+	get:
+		return grid_width * grid_height
 var grid_size: Vector2i: get = get_grid_size
 func get_grid_size(): return Vector2i(grid_width, grid_height)
 var canvas_size: Vector2i: get = get_canvas_size
@@ -29,24 +32,38 @@ func _ready():
 	
 	empty = font.get_src(' '.to_ascii_buffer()[0])
 	grid.resize(grid_width * grid_height)
-	clear()
+	
+
+	if Engine.is_editor_hint():
+		visibility_changed.connect(func():
+			queue_redraw()
+			)	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Engine.is_editor_hint():
-		queue_redraw()
-		return
+	pass
 func _draw():
 	if Engine.is_editor_hint():
-		var char_size = Vector2i(8, 8)
-		draw_rect(Rect2i(transform.origin, grid_size * char_size), back, true)
+		#var char_size = Vector2i(8, 8)
+		var char_size = (font as SurfaceFontGD).char_size
+		draw_rect(Rect2i(Vector2i.ZERO, grid_size * char_size), back, true)
+		
+		for i in range(glyph_count):
+			var x = i % grid_width
+			var y = floor(i / grid_width)
+			var pos = Vector2i(x, y)
+			
+			draw_rect(Rect2i(pos * char_size, char_size), back, true)
+			draw_rect(Rect2i(pos * char_size, char_size), fore, false)
+			
 		return
 	for i in range(len(grid)):
-		var x = i % grid_width
-		var y = floor(i / grid_width)
-		var pos = Vector2i(x, y)
 		var r := grid[i]
 		if r == null:
 			continue
+		var x = i % grid_width
+		var y = floor(i / grid_width)
+		var pos = Vector2i(x, y)
+		
 		draw_rect(Rect2i(pos * font.char_size, font.char_size), r.back)
 		draw_texture_rect_region(font.texture, Rect2i(pos * font.char_size, font.char_size), r.src, r.fore)
 

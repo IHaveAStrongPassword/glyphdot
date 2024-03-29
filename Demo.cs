@@ -13,12 +13,12 @@ public partial class Demo : Node2D
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta){
-		SurfaceGD.Call("render_string_fb", 1, 1, "CS->GD", Colors.YellowGreen, Colors.Black);
+		SurfaceGD.Call("render_string_fb", 0, 1, "[CS->GD]", Colors.YellowGreen, Colors.Black);
 		SurfaceGD.Call("queue_redraw");
 		if(SurfaceCS is Surface s)
 		{
 			s.Clear();
-			s.Print(1, 1, "CS->CS", Colors.SpringGreen, Colors.Black);
+			s.Print(0, 1, "[CS->CS]", Colors.SpringGreen, Colors.Black);
 			s.QueueRedraw();
 		}
 		

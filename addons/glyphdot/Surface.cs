@@ -18,6 +18,7 @@ public partial class Surface : Node2D
 	[Export] Color
 		fore = Colors.White,
 		back = Colors.Black;
+	[Export] bool drawToolGrid = false;
 	private SurfaceFont _font =>	(SurfaceFont) font;
 	public Vector2I GlyphSize =>	_font.GlyphSize;
 	public int GlyphCount =>		GridWidth * GridHeight;
@@ -45,6 +46,11 @@ public partial class Surface : Node2D
 	};
 	private GlyphCell[] grid = new GlyphCell[1];
 	public override void _Ready() {
+		if(Engine.IsEditorHint()) {
+			VisibilityChanged += () => {
+				QueueRedraw();
+			};
+		}
 		ResetGrid();
 		//Debug.Print($"{Resource.IsInstanceValid(_font)} {_font}");
 	}
@@ -56,10 +62,6 @@ public partial class Surface : Node2D
 	}
 	public override void _Process(double delta){
 		base._Process(delta);
-		if (Engine.IsEditorHint()){
-			QueueRedraw();
-			return;
-		}
 	}
 	public override void _Draw(){
 		base._Draw();
@@ -67,8 +69,10 @@ public partial class Surface : Node2D
 			Console.WriteLine($"Font: {font}");
 			DrawRect(new(Vector2.Zero, GridSize * GlyphSize), back, true);
 
-			foreach(int i in Enumerable.Range(0, GlyphCount)) {
-				DrawRect(new(IndexToPos(i) * GlyphSize, GlyphSize), fore, false);
+			if(drawToolGrid) {
+				foreach(int i in Enumerable.Range(0, GlyphCount)) {
+					DrawRect(new(IndexToPos(i) * GlyphSize, GlyphSize), fore, false);
+				}
 			}
 			Console.WriteLine("Drawing empty in editor");
 			return;
